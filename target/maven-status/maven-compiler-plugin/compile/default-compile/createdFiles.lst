@@ -1,0 +1,13 @@
+com\intellibank\IntelliBankApplication.class
+com\intellibank\entity\Customer.class
+com\intellibank\entity\Role.class
+com\intellibank\entity\User.class
+com\intellibank\entity\AccountType.class
+com\intellibank\repository\UserRepository.class
+com\intellibank\entity\AccountStatus.class
+com\intellibank\repository\CustomerRepository.class
+com\intellibank\repository\RoleRepository.class
+com\intellibank\entity\BankAccount.class
+com\intellibank\entity\RoleName.class
+com\intellibank\config\SecurityConfig.class
+com\intellibank\repository\BankAccountRepository.class
