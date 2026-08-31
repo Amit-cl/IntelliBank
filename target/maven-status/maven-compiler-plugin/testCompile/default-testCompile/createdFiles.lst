@@ -1,2 +1,4 @@
+com\intellibank\controller\AuthControllerTest.class
+com\intellibank\service\UserServiceTest.class
 com\intellibank\JpaSchemaValidationTest.class
 com\intellibank\entity\EntityMappingTest.class
