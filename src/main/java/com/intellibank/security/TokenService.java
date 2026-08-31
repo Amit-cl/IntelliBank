@@ -34,6 +34,9 @@ public class TokenService {
                 .claim("authorities", scope)
                 .build();
 
-        return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
+        org.springframework.security.oauth2.jwt.JwsHeader jwsHeader = org.springframework.security.oauth2.jwt.JwsHeader
+                .with(org.springframework.security.oauth2.jose.jws.MacAlgorithm.HS256).build();
+
+        return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, claims)).getTokenValue();
     }
 }
