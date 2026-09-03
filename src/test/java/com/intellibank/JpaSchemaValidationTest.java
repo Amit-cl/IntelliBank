@@ -75,5 +75,21 @@ class JpaSchemaValidationTest {
         var customerAccounts = bankAccountRepository.findByCustomerId(savedCustomer.getId());
         assertEquals(1, customerAccounts.size());
         assertEquals(new BigDecimal("5000.00"), customerAccounts.get(0).getBalance());
+
+        // 6. Save Transaction linked to BankAccount
+        Transaction txn = new Transaction();
+        txn.setTransactionReference("TXN-SCHEMA-TEST-1");
+        txn.setTargetAccount(savedAccount);
+        txn.setAmount(new BigDecimal("500.00"));
+        txn.setTransactionType(TransactionType.DEPOSIT);
+        txn.setStatus(TransactionStatus.SUCCESS);
+        Transaction savedTxn = transactionRepository.save(txn);
+
+        assertNotNull(savedTxn.getId());
+        assertNotNull(savedTxn.getCreatedAt());
+        assertEquals("TXN-SCHEMA-TEST-1", savedTxn.getTransactionReference());
     }
+
+    @Autowired
+    private TransactionRepository transactionRepository;
 }

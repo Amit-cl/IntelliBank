@@ -1,5 +1,4 @@
 package com.intellibank.controller;
-
 import com.intellibank.dto.LoginRequest;
 import com.intellibank.dto.LoginResponse;
 import com.intellibank.dto.RegisterRequest;

@@ -1,5 +1,4 @@
 package com.intellibank.controller;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellibank.dto.RegisterRequest;
 import com.intellibank.entity.User;
@@ -29,6 +28,12 @@ class AuthControllerTest {
 
     @MockBean
     private UserService userService;
+
+    @MockBean
+    private org.springframework.security.authentication.AuthenticationManager authenticationManager;
+
+    @MockBean
+    private com.intellibank.security.TokenService tokenService;
 
     @Autowired
     private ObjectMapper objectMapper;

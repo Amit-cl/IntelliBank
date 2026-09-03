@@ -1,4 +1,9 @@
 C:\IntelliBank\src\test\java\com\intellibank\service\UserServiceTest.java
+C:\IntelliBank\src\test\java\com\intellibank\controller\AccountControllerTest.java
 C:\IntelliBank\src\test\java\com\intellibank\controller\AuthControllerTest.java
+C:\IntelliBank\src\test\java\com\intellibank\controller\AdminAccountControllerTest.java
+C:\IntelliBank\src\test\java\com\intellibank\service\AccountServiceTest.java
 C:\IntelliBank\src\test\java\com\intellibank\JpaSchemaValidationTest.java
 C:\IntelliBank\src\test\java\com\intellibank\entity\EntityMappingTest.java
+C:\IntelliBank\src\test\java\com\intellibank\service\TransactionServiceTest.java
+C:\IntelliBank\src\test\java\com\intellibank\controller\TransactionControllerTest.java
