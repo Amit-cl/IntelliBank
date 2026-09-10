@@ -3,7 +3,9 @@ import com.intellibank.dto.LoginRequest;
 import com.intellibank.dto.LoginResponse;
 import com.intellibank.dto.RegisterRequest;
 import com.intellibank.entity.User;
+import com.intellibank.entity.AuditAction;
 import com.intellibank.security.TokenService;
+import com.intellibank.service.AuditService;
 import com.intellibank.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -29,11 +31,16 @@ public class AuthController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
+    private final AuditService auditService;
 
-    public AuthController(UserService userService, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public AuthController(UserService userService,
+                          AuthenticationManager authenticationManager,
+                          TokenService tokenService,
+                          AuditService auditService) {
         this.userService = userService;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
+        this.auditService = auditService;
     }
 
     @PostMapping("/register")
@@ -62,6 +69,8 @@ public class AuthController {
         List<String> roles = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
+
+        auditService.log(authentication.getName(), AuditAction.LOGIN, "User logged in successfully");
 
         return ResponseEntity.ok(new LoginResponse(token, authentication.getName(), roles));
     }

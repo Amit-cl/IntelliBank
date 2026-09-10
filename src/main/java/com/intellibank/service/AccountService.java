@@ -3,6 +3,7 @@ package com.intellibank.service;
 import com.intellibank.dto.AccountResponse;
 import com.intellibank.dto.CreateAccountRequest;
 import com.intellibank.entity.AccountStatus;
+import com.intellibank.entity.AuditAction;
 import com.intellibank.entity.BankAccount;
 import com.intellibank.entity.Customer;
 import com.intellibank.entity.User;
@@ -25,14 +26,17 @@ public class AccountService {
     private final BankAccountRepository bankAccountRepository;
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
+    private final AuditService auditService;
     private final SecureRandom secureRandom = new SecureRandom();
 
     public AccountService(BankAccountRepository bankAccountRepository,
                           CustomerRepository customerRepository,
-                          UserRepository userRepository) {
+                          UserRepository userRepository,
+                          AuditService auditService) {
         this.bankAccountRepository = bankAccountRepository;
         this.customerRepository = customerRepository;
         this.userRepository = userRepository;
+        this.auditService = auditService;
     }
 
     @Transactional
@@ -50,6 +54,10 @@ public class AccountService {
         account.setStatus(AccountStatus.ACTIVE);
 
         BankAccount savedAccount = bankAccountRepository.save(account);
+
+        auditService.log(username, AuditAction.ACCOUNT_CREATED,
+                "Account " + accountNumber + " (" + request.getAccountType() + ") created with balance ₹" + balance);
+
         return AccountResponse.fromEntity(savedAccount);
     }
 
@@ -87,6 +95,10 @@ public class AccountService {
 
         account.setStatus(newStatus);
         BankAccount updatedAccount = bankAccountRepository.save(account);
+
+        auditService.log(account.getCustomer().getUser().getUsername(), AuditAction.ACCOUNT_STATUS_CHANGE,
+                "Account " + accountNumber + " status updated to " + newStatus);
+
         return AccountResponse.fromEntity(updatedAccount);
     }
 

@@ -28,15 +28,18 @@ public class TransactionService {
     private final TransactionRepository transactionRepository;
     private final CustomerRepository customerRepository;
     private final UserRepository userRepository;
+    private final AuditService auditService;
 
     public TransactionService(BankAccountRepository bankAccountRepository,
                               TransactionRepository transactionRepository,
                               CustomerRepository customerRepository,
-                              UserRepository userRepository) {
+                              UserRepository userRepository,
+                              AuditService auditService) {
         this.bankAccountRepository = bankAccountRepository;
         this.transactionRepository = transactionRepository;
         this.customerRepository = customerRepository;
         this.userRepository = userRepository;
+        this.auditService = auditService;
     }
 
     @Transactional
@@ -68,6 +71,10 @@ public class TransactionService {
                 : "Deposit into account " + account.getAccountNumber());
 
         Transaction savedTxn = transactionRepository.save(transaction);
+
+        auditService.log(username, AuditAction.DEPOSIT,
+                "Deposited ₹" + request.getAmount() + " into account " + account.getAccountNumber());
+
         return TransactionResponse.fromEntity(savedTxn);
     }
 
@@ -105,6 +112,10 @@ public class TransactionService {
                 : "Withdrawal from account " + account.getAccountNumber());
 
         Transaction savedTxn = transactionRepository.save(transaction);
+
+        auditService.log(username, AuditAction.WITHDRAWAL,
+                "Withdrew ₹" + request.getAmount() + " from account " + account.getAccountNumber());
+
         return TransactionResponse.fromEntity(savedTxn);
     }
 
@@ -173,6 +184,10 @@ public class TransactionService {
                 : "Transfer from " + source.getAccountNumber() + " to " + target.getAccountNumber());
 
         Transaction savedTxn = transactionRepository.save(transaction);
+
+        auditService.log(username, AuditAction.TRANSFER,
+                "Transferred ₹" + request.getAmount() + " from " + source.getAccountNumber() + " to " + target.getAccountNumber());
+
         return TransactionResponse.fromEntity(savedTxn);
     }
 

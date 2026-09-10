@@ -35,6 +35,9 @@ class AuthControllerTest {
     @MockBean
     private com.intellibank.security.TokenService tokenService;
 
+    @MockBean
+    private com.intellibank.service.AuditService auditService;
+
     @Autowired
     private ObjectMapper objectMapper;
 

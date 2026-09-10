@@ -85,11 +85,18 @@ class JpaSchemaValidationTest {
         txn.setStatus(TransactionStatus.SUCCESS);
         Transaction savedTxn = transactionRepository.save(txn);
 
-        assertNotNull(savedTxn.getId());
-        assertNotNull(savedTxn.getCreatedAt());
-        assertEquals("TXN-SCHEMA-TEST-1", savedTxn.getTransactionReference());
+        // 7. Save AuditLog
+        AuditLog auditLog = new AuditLog("alice_smith", AuditAction.LOGIN, "User logged in");
+        AuditLog savedAuditLog = auditLogRepository.save(auditLog);
+        assertNotNull(savedAuditLog.getId());
+        assertNotNull(savedAuditLog.getCreatedAt());
+        assertEquals("alice_smith", savedAuditLog.getUsername());
+        assertEquals(AuditAction.LOGIN, savedAuditLog.getAction());
     }
 
     @Autowired
     private TransactionRepository transactionRepository;
+
+    @Autowired
+    private AuditLogRepository auditLogRepository;
 }

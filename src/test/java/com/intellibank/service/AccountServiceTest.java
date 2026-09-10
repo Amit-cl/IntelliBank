@@ -41,6 +41,9 @@ class AccountServiceTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private AuditService auditService;
+
     @InjectMocks
     private AccountService accountService;
 
