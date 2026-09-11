@@ -197,9 +197,16 @@ This guarantees that all concurrent transactions acquire locks in the exact same
 - PostgreSQL installed and running (default: port `5432`, db: `intellibank`, user: `postgres`, password: `password`)
 - Maven 3.8+
 
-### Setup Database
+### Setup Database & Environment
 ```sql
 CREATE DATABASE intellibank;
+```
+
+```bash
+# Copy environment configuration template
+cp .env.example .env
+
+# Edit .env with your credentials (PostgreSQL password, Groq API key)
 ```
 
 ### Run Locally
@@ -207,6 +214,7 @@ CREATE DATABASE intellibank;
 # Clone the repository
 git clone https://github.com/Amit-cl/IntelliBank.git
 cd IntelliBank
+
 
 # Run full test suite (43 automated tests)
 mvn test

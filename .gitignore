@@ -14,3 +14,8 @@ target/
 *.log
 .DS_Store
 Thumbs.db
+
+### Environment Variables & Secrets ###
+.env
+.env.*
+!.env.example
